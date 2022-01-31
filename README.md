@@ -36,6 +36,7 @@ Author URI: https://rohitchouhan.com
 */
 ```
 Write this code and save it, you will see this plugin in your wordpress plugin page.
+**And Activate It**
 
 ## Create Menu and Pages
 First mind the function need to be use in creating menu and page, when you create menu, pages will also created automatically in back-end you just need to add front-end.
@@ -46,3 +47,28 @@ First mind the function need to be use in creating menu and page, when you creat
 |  add_menu_page() | add menu to sidebar of wordpress page  | `page_title` , `menu_name`, `{manage_options}`, `menu_slug`, `page_function`  |
 |  add_submenu_page() |  add sub menu in parent menu | `parent_menu_slug`,  `page_title` , `menu_name`, `{manage_options}`, `menu_slug`, `page_function`   |
 
+Example: 
+```php
+function my_demo_menu()
+{
+	//parent menu
+	add_menu_page(
+		'Demo Plugin First Page', //page title
+		'Demo Dashboard', //menu title
+		'manage_options', //capabilities
+		'demo_dashboard', //menu slug
+		'mydemo_dashboard', //page function
+	);
+
+	//this is a submenu
+	add_submenu_page(
+		'demo_dashboard', //parent slug
+		'My New Page', //page title
+		'New Page', //menu title
+		'manage_options', //capability
+		'demo_new_page', //menu slug
+		'mydemo_new_page'
+	); 
+}
+add_action('admin_menu', 'my_demo_menu');
+```
