@@ -36,3 +36,13 @@ Author URI: https://rohitchouhan.com
 */
 ```
 Write this code and save it, you will see this plugin in your wordpress plugin page.
+
+## Create Menu and Pages
+First mind the function need to be use in creating menu and page, when you create menu, pages will also created automatically in back-end you just need to add front-end.
+***Note:*** which parameters are inside {}, its fixed name do not replace or change.
+|   function| desc  | parameter  |
+| ------------ | ------------ | ------------ |
+|  add_action(); |  Predefined function to add actions/componanet to wp plugin  |   `{admin_menu}`, `function_name` |
+|  add_menu_page() | will add menu to sidebar of wordpress page  | `page_title` , `menu_name`, `{manage_options}`, `menu_slug`, `page_function`  |
+|  add_submenu_page() |  to add sub menu in parent menu | `parent_menu_slug`,  `page_title` , `menu_name`, `{manage_options}`, `menu_slug`, `page_function`   |
+
