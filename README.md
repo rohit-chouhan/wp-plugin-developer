@@ -90,4 +90,7 @@ After creating this page, please inlucde this page to **init.php**.
 require_once(plugin_dir_path(__FILE__).'dashboard.php');
 ```
 paste this code in **init.php** after plugin details page.
-Now when you click on Demo Dashboard from Menu, you will see this page.
+Now when you click on Demo Dashboard from Menu, you will see this page, So same as your can create multiple function.
+
+Screenshot: 
+![](https://awesomescreenshot.s3.amazonaws.com/image/2293567/21186193-83ca1d6a9df3830640e45b64abcb3e1d.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJSCJQ2NM3XLFPVKA%2F20220131%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220131T073323Z&X-Amz-Expires=28800&X-Amz-SignedHeaders=host&X-Amz-Signature=eaddbbae31eca622ca15f72e23607f9eb453faf9bcf7b3ebb22ec628d2dfbe2a)
