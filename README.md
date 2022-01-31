@@ -42,7 +42,7 @@ First mind the function need to be use in creating menu and page, when you creat
 ***Note:*** which parameters are inside {}, its fixed name do not replace or change.
 |   function| desc  | parameter  |
 | ------------ | ------------ | ------------ |
-|  add_action(); |  Predefined function to add actions/componanet to wp plugin  |   `{admin_menu}`, `function_name` |
-|  add_menu_page() | will add menu to sidebar of wordpress page  | `page_title` , `menu_name`, `{manage_options}`, `menu_slug`, `page_function`  |
-|  add_submenu_page() |  to add sub menu in parent menu | `parent_menu_slug`,  `page_title` , `menu_name`, `{manage_options}`, `menu_slug`, `page_function`   |
+|  add_action(); |   add actions/componenet to wp plugin  |   `{admin_menu}`, `function_name` |
+|  add_menu_page() | add menu to sidebar of wordpress page  | `page_title` , `menu_name`, `{manage_options}`, `menu_slug`, `page_function`  |
+|  add_submenu_page() |  add sub menu in parent menu | `parent_menu_slug`,  `page_title` , `menu_name`, `{manage_options}`, `menu_slug`, `page_function`   |
 
