@@ -72,3 +72,22 @@ function my_demo_menu()
 }
 add_action('admin_menu', 'my_demo_menu');
 ```
+
+Now your plugin menus are created inside bar of wordpress site, now you need to create a page for all menus pages. as in above syntax we have **page function**, so you need to create function with name of **page function**. so create new file inside your wordpress plugin e.x. **dashboard.php** and write code in side.
+
+```php
+<?php
+    function mydemo_dashboard() {
+?>
+    <h1>Dashboard</h1>
+    <p>Hello this is dashboard page</p>
+<?php 
+    }
+?>
+```
+After creating this page, please inlucde this page to **init.php**.
+```php
+require_once(plugin_dir_path(__FILE__).'dashboard.php');
+```
+paste this code in **init.php** after plugin details page.
+Now when you click on Demo Dashboard from Menu, you will see this page.
