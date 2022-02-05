@@ -122,4 +122,7 @@ function load_static()
 
 add_action('admin_enqueue_scripts', 'load_static');
 ```
+Screenshot:
+
+![](https://i.ibb.co/YphGwY1/links.jpg)
 ## More content adding soon...
