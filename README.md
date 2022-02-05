@@ -95,4 +95,31 @@ Now when you click on Demo Dashboard from Menu, you will see this page, So same 
 Screenshot: 
 ![](https://awesomescreenshot.s3.amazonaws.com/image/2293567/21186193-83ca1d6a9df3830640e45b64abcb3e1d.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJSCJQ2NM3XLFPVKA%2F20220205%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220205T133952Z&X-Amz-Expires=28800&X-Amz-SignedHeaders=host&X-Amz-Signature=6aaff1d645c352fb0495bed445cf60a7c5dab6454478b4f3620929c2a23b16d7)
 
+## Load CSS & JS in Plugin or Webpage
+If you want to load your custom css and ls file in side your plugin page, then here you need to use **add_action('admin_enqueue_scripts','{}')**, follow below table for function.
+### Registring Path
+| Function           | Functionality                   | Syntax                                       |
+|--------------------|---------------------------------|----------------------------------------------|
+| wp_register_style  | Create link path for css styles | wp_register_style(name,path,false,version); and wp_enqueue_style('name');  |
+| wp_register_script | Create Link path for JS file    | wp_register_script(name,path,false,version); and wp_enqueue_script('name');|
+
+### Initilizing
+| Function           | Functionality                   | Syntax                                       |
+|--------------------|---------------------------------|----------------------------------------------|
+| admin_enqueue_scripts  | Initilize CSS & JS in admin panel |add_action('admin_enqueue_scripts', 'function_name');  |
+| enqueue_scripts  | Initilize CSS & JS in whole site page |add_action('enqueue_scripts', 'function_name');  |
+
+Example:-
+```php
+function load_static()
+{
+		wp_register_style('bulma_datatable_css', 'https://cdn.datatables.net/1.11.4/css/dataTables.bulma.min.css', false, '1.0.0');
+		wp_enqueue_style('bulma_datatable_css');
+
+		wp_register_script('jquery_js', 'https://code.jquery.com/jquery-3.5.1.js', false, '1.0.0');
+		wp_enqueue_script('jquery_js');	
+}
+
+add_action('admin_enqueue_scripts', 'load_static');
+```
 ## More content adding soon...
