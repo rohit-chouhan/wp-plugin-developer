@@ -125,4 +125,33 @@ add_action('admin_enqueue_scripts', 'load_static');
 Screenshot:
 
 ![](https://i.ibb.co/YphGwY1/links.jpg)
+
+## Simple HTML Form
+Sometime we need to create user input control to get some data from users, so here i simple way to create from in wp plugin save with html input and php codes, just simply add
+input form in **dashboard.php**.
+
+Complete code of dashboard.php
+```php
+<?php
+    function mydemo_dashboard() {
+        
+    $name = '';
+
+    if(isset($_POST['click'])){
+        $name = $_POST['username'];
+    }
+?>
+    <h1>Dashboard</h1>
+    <p>Hello, My name is <?php echo $name;?></p>
+    <form action="" method="post">
+        <label>Enter Your Name</label>
+        <input type="text" name="username"/>
+        <button type="submit" name="click">Click Me</button>
+    </form>
+<?php 
+    }
+?>
+```
+Screenshot:
+![](https://awesomescreenshot.s3.amazonaws.com/image/2293567/21956560-eb1cd5188e00fc14d051ae07af4206e8.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJSCJQ2NM3XLFPVKA%2F20220210%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220210T134741Z&X-Amz-Expires=28800&X-Amz-SignedHeaders=host&X-Amz-Signature=9971bee108ea888ea70cf35344547084d5e5657073a17078b147da4f2024860f)
 ## More content adding soon...
