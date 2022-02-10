@@ -157,4 +157,42 @@ Complete code of dashboard.php
 Screenshot:
 
 ![](https://awesomescreenshot.s3.amazonaws.com/image/2293567/21956560-eb1cd5188e00fc14d051ae07af4206e8.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJSCJQ2NM3XLFPVKA%2F20220210%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220210T134741Z&X-Amz-Expires=28800&X-Amz-SignedHeaders=host&X-Amz-Signature=9971bee108ea888ea70cf35344547084d5e5657073a17078b147da4f2024860f)
+
+## CRUD Functions
+Create, Read, Update, Delete (CRUD) is a method use to retrive, add, delete data from database, in WordPress there is predefined function for CRUD where we can perform CRUD methods with HTML From and will make Plugin more powerful and useful.
+
+### Normal Function
+|  -|type|usage|syntex|
+|--|--|--|--|
+| global  $wpdb | var | global define wordpress database |  global  $wpdb |
+| dbDelta() | function | execute mysql query |  dbDelta(query); |
+
+### CRUD Function
+
+|function|usage|syntex|
+|--|--|--|
+|$wpdb->prepare() & $wpdb->query() | manually query | $wpdb->prepare(any_query); |
+|$wpdb->insert() | insert new data to table | $wpdb->insert(table_name,array); |
+|$wpdb->update() | update data to table | $wpdb->insert(table_name,array,array); |
+|$wpdb->delete() | delete data to table | $wpdb->insert(table_name,array,array); |
+|$wpdb->get_results() | retrive data | $wpdb->get_results(any_query); |
+
+#### $wpdb->prepare()
+Prepare function is used to execute any query in wordpress.
+```php
+global $wpdb;
+$wpdb->query($wpdb->prepare("DELETE FROM user WHERE id =1"));
+```
+
+#### $wpdb->insert()
+Insert function is used to insert new data inside table, wher you have to give associative array **key as table_column** and **values as data**.
+```php
+global $wpdb;
+$data = array(
+	"name"=>"Rohit",
+	"email"=>"rohit@xyz.com"
+);
+$wpdb->insert("users",$data);
+```
+It will insert data to **"users"** table in name and email column of table.
 ## More content adding soon...
