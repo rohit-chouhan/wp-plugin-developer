@@ -258,4 +258,212 @@ global $wpdb;
 $wpdb->get_results("SELECT * FROM users");
 ```
 It will all data from users table.
-## More content adding soon...
+
+## Complete Source Code
+
+### init.php
+```php
+<?php
+/*
+Plugin Name: My First Plugin
+Plugin URI: https://rohitchouhan.com
+Description: This is my first wordpress plugin
+Version: 1.0.0
+Author: Rohit Chouhan
+Author URI: https://rohitchouhan.com
+
+*/
+
+require_once(plugin_dir_path(__FILE__).'dashboard.php');
+require_once(plugin_dir_path(__FILE__).'demo_page.php');
+
+//=========== create menu start =================
+function my_demo_menu()
+{
+	//parent menu
+	add_menu_page(
+		'Demo Plugin First Page', //page title
+		'Demo Dashboard', //menu title
+		'manage_options', //capabilities
+		'demo_dashboard', //menu slug
+		'mydemo_dashboard', //page function
+	);
+
+	//this is a submenu
+	add_submenu_page(
+		'demo_dashboard', //parent slug
+		'My New Page', //page title
+		'Demo Page', //menu title
+		'manage_options', //capability
+		'demo_new_page', //menu slug
+		'mydemo_page'
+	); 
+}
+add_action('admin_menu', 'my_demo_menu');
+//=========== create menu end =================
+
+
+//=========== load static file start =================
+function load_static()
+{
+		wp_register_style('bulma_datatable_css', 'https://cdn.datatables.net/1.11.4/css/dataTables.bulma.min.css', false, '1.0.0');
+		wp_enqueue_style('bulma_datatable_css');
+
+		wp_register_script('jquery_js', 'https://code.jquery.com/jquery-3.5.1.js', false, '1.0.0');
+		wp_enqueue_script('jquery_js');	
+}
+
+add_action('admin_enqueue_scripts', 'load_static'); //in wordpress admin
+add_action('enqueue_scripts', 'load_static'); //in whole website except admin panel
+//=========== load static file end =================
+
+//=========== register hook (only execute when plugin is activate) =================
+function create_mydb(){
+	global $wpdb;
+	$table_name = $wpdb->prefix . "demo_users"; //{wp_}users
+	$charset_collate = $wpdb->get_charset_collate();
+	$sql = "CREATE TABLE $table_name (
+            `id` int NOT NULL AUTO_INCREMENT,
+            `name` varchar(50) CHARACTER SET utf8 NOT NULL,
+            `emaild` varchar(10) CHARACTER SET utf8 NOT NULL,
+            `address` varchar(2000) CHARACTER SET utf8 NOT NULL,
+            PRIMARY KEY (`id`)
+          ) $charset_collate;
+		  ";
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	dbDelta($sql);
+}
+register_activation_hook(__FILE__, 'create_mydb');
+//=========== register hook end =================
+
+
+```
+### dashboard.php
+```php
+<?php
+    function mydemo_dashboard() {
+    global $wpdb;
+    $name = '{not found}';
+    if(isset($_POST['click'])){
+        $name = $_POST['username'];
+    }
+
+    if(isset($_POST['add_data'])){
+        $data = array(
+            "name"=>$_POST['username'],
+            "email"=>$_POST['email'],
+            "address"=>$_POST['address']
+        );
+        $wpdb->insert("wp_demo_users",$data);
+        $wpdb->show_errors(true);
+        $wpdb->print_error();
+    }
+
+    if(isset($_POST['update_data'])){
+        $data = array(
+            "name"=>$_POST['username']
+        );
+        $where =  array('id'=>$_POST['user_id']); // data format
+        $wpdb->update("wp_demo_users",$data,$where);
+        $wpdb->show_errors(true);
+        $wpdb->print_error();
+    }
+
+    if(isset($_POST['delete_data'])){
+        $where =  array('id'=>$_POST['user_id']); // data format
+        $wpdb->delete("wp_demo_users",$where);
+        $wpdb->show_errors(true);
+        $wpdb->print_error();
+    }
+?>
+    <h1>Dashboard</h1>
+    <div class="card">
+    <p>Hello, My name is : <?php echo $name;?></p>
+    <form action="" method="post">
+        <label>Enter Your Name</label>
+        <input type="text" name="username"/>
+        <button type="submit" name="click">Print My Name</button>
+    </form>
+    </div>
+    <hr>
+    <div class="card">
+    <h1>Add New Data</h1>
+    <form action="" method="post">
+        <label>Enter Your Name</label>
+        <input type="text" name="username"/><br><br>
+        <label>Email</label>
+        <input type="email" name="email"/><br><br>
+        <label>Address</label>
+        <input type="text" name="address"/><br><br>
+        <button type="submit" name="add_data">Add Data</button>
+    </form>
+</div>
+    <hr>
+    <div class="card">
+    <h1>Update</h1>
+    <form action="" method="post">
+        <label>Update Name</label>
+        <input type="text" name="username"/><br><br>
+        <label>Where Id = </label>
+        <input type="number" name="user_id"/><br><br>
+        <input type="submit" name="update_data" value="Update">
+    </form>
+    </div>
+    <hr>
+    <div class="card">
+    <h1>Delete</h1>
+    <form action="" method="post">
+        <label>Delelte User Where Id = </label>
+        <input type="number" name="user_id"/><br><br>
+        <input type="submit" name="delete_data" value="Delete">
+    </form>
+</div>
+    <hr>
+    <div class="card">
+    <h1>All Users</h1>
+    <?php
+        global $wpdb;
+        $table_name = $wpdb->prefix . "demo_users";
+        $rows = $wpdb->get_results("SELECT * from $table_name");
+        ?>
+        
+        <table border="1" id="example" class='table table-striped table-hover'>
+            <thead>
+            <tr>
+                <th class="manage-column ss-list-width">ID</th>
+                <th class="manage-column ss-list-width">Name</th>
+                <th class="manage-column ss-list-width">Email</th>
+                <th class="manage-column ss-list-width">Address</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($rows as $row) { ?>
+                <tr>
+                    <td class="manage-column ss-list-width"><?php echo $row->id; ?></td>
+                    <td class="manage-column ss-list-width"><?php echo $row->name; ?></td>
+                    <td class="manage-column ss-list-width"><?php echo $row->email; ?></td>
+                    <td class="manage-column ss-list-width"><?php echo $row->address; ?></td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+<?php 
+    }
+?>
+```
+
+## demo_page.php
+```php
+<?php
+    function mydemo_page() {
+        
+?>
+    <h1>Demo Page</h1>
+    <div class="card">
+        Your Content Here
+    </div>
+<?php 
+    }
+?>
+```
