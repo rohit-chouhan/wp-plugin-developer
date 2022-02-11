@@ -141,7 +141,7 @@ example (create new table when plugin activate):
 ```php
 function create_mydb(){
 	global $wpdb;
-	$table_name = $wpdb->prefix . "users"; //{wp_}users
+	$table_name = $wpdb->prefix . "demo_users"; //{wp_}users
 	$charset_collate = $wpdb->get_charset_collate();
 	$sql = "CREATE TABLE $table_name (
             `id` int NOT NULL AUTO_INCREMENT,
