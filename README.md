@@ -203,7 +203,7 @@ Create, Read, Update, Delete (CRUD) is a method use to retrive, add, delete data
 |function|usage|syntex|
 |--|--|--|
 |$wpdb->prepare() & $wpdb->query() | manually query | $wpdb->prepare(any_query); |
-|$wpdb->insert() | insert new data to table | $wpdb->insert(table_name,array,array); |
+|$wpdb->insert() | insert new data to table | $wpdb->insert(table_name,array); |
 |$wpdb->update() | update data to table | $wpdb->insert(table_name,array,array); |
 |$wpdb->delete() | delete data to table | $wpdb->insert(table_name,array); |
 |$wpdb->get_results() | retrive data | $wpdb->get_results(any_query); |
@@ -223,8 +223,7 @@ $data = array(
 	"name"=>"Rohit",
 	"email"=>"rohit@xyz.com"
 );
- $format =  array('%s', '%s');
-$wpdb->insert("users",$data,$format);
+$wpdb->insert("users",$data);
 ```
 It will insert data to **"users"** table in name and email column of table.
 
