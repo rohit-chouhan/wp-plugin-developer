@@ -126,6 +126,37 @@ Screenshot:
 
 ![](https://i.ibb.co/YphGwY1/links.jpg)
 
+## Run Any Function when Plugin is Activated
+Sometme you need to execute a function when use activate the plugin, e.x. users need to create new table in wordpress when user activate the plugin here we have to use function **register_activation_hook()**
+
+syntax:
+```php
+function demo(){
+	//any code
+}
+register_activation_hook(__FILE__, "demo");
+```
+
+example (create new table when plugin activate): 
+```php
+function create_mydb(){
+	global $wpdb;
+	$table_name = $wpdb->prefix . "users"; //{wp_}users
+	$charset_collate = $wpdb->get_charset_collate();
+	$sql = "CREATE TABLE $table_name (
+            `id` int NOT NULL AUTO_INCREMENT,
+            `name` varchar(50) CHARACTER SET utf8 NOT NULL,
+            `emaild` varchar(10) CHARACTER SET utf8 NOT NULL,
+            `address` varchar(2000) CHARACTER SET utf8 NOT NULL,
+            PRIMARY KEY (`id`)
+          ) $charset_collate;
+		  ";
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	dbDelta($sql);
+}
+register_activation_hook(__FILE__, 'create_mydb');
+```
+
 ## Form Handling in WP Plugin
 Sometime we need to create user input control to get some data from users, so here i simple way to create from in wp plugin save with html input and php codes, just simply add
 input form in **dashboard.php**.
@@ -174,7 +205,7 @@ Create, Read, Update, Delete (CRUD) is a method use to retrive, add, delete data
 |$wpdb->prepare() & $wpdb->query() | manually query | $wpdb->prepare(any_query); |
 |$wpdb->insert() | insert new data to table | $wpdb->insert(table_name,array); |
 |$wpdb->update() | update data to table | $wpdb->insert(table_name,array,array); |
-|$wpdb->delete() | delete data to table | $wpdb->insert(table_name,array,array); |
+|$wpdb->delete() | delete data to table | $wpdb->insert(table_name,array); |
 |$wpdb->get_results() | retrive data | $wpdb->get_results(any_query); |
 
 #### $wpdb->prepare()
@@ -185,7 +216,7 @@ $wpdb->query($wpdb->prepare("DELETE FROM user WHERE id =1"));
 ```
 
 #### $wpdb->insert()
-Insert function is used to insert new data inside table, wher you have to give associative array **key as table_column** and **values as data**.
+Insert function is used to insert new data inside table, where you have to give associative array **key as table_column** and **values as data**.
 ```php
 global $wpdb;
 $data = array(
@@ -195,4 +226,34 @@ $data = array(
 $wpdb->insert("users",$data);
 ```
 It will insert data to **"users"** table in name and email column of table.
+
+#### $wpdb->update()
+Update function is used to update exist data inside table, where you have to give 2 associative array, first for data and second for where clause.
+```php
+global $wpdb;
+$data = array(
+	"name"=>"Chouhan",
+	"email"=>"rohit@xyz.com"
+);
+$where = array("id"=>1);
+$wpdb->update("users",$data,$where);
+```
+It will update data to **"users"** table in name where id=1.
+
+#### $wpdb->delete()
+Delete function is used to update exist data inside table, where you have to provide associative array for where clause.
+```php
+global $wpdb;
+$where = array("id"=>1);
+$wpdb->delete("users",$where);
+```
+It will delete row data to **"users"** table where id=1.
+
+#### $wpdb->get_results()
+get_results() function is used to retrive data from table, where you have to provide query as parameter.
+```php
+global $wpdb;
+$wpdb->get_results("SELECT * FROM users");
+```
+It will delete row data to **"users"** table where id=1.
 ## More content adding soon...
