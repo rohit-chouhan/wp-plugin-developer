@@ -129,6 +129,8 @@ Screenshot:
 ## Run Any Function when Plugin is Activated
 Sometme you need to execute a function when use activate the plugin, e.x. users need to create new table in wordpress when user activate the plugin here we have to use function **register_activation_hook()**
 
+Note: please don't create **users** table, because users is already exist in wordprss database try to give another name **e.x. demo_users**.
+
 syntax:
 ```php
 function demo(){
@@ -255,5 +257,5 @@ get_results() function is used to retrive data from table, where you have to pro
 global $wpdb;
 $wpdb->get_results("SELECT * FROM users");
 ```
-It will delete row data to **"users"** table where id=1.
+It will all data from users table.
 ## More content adding soon...
