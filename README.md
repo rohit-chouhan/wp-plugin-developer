@@ -146,7 +146,7 @@ function create_mydb(){
 	$sql = "CREATE TABLE $table_name (
             `id` int NOT NULL AUTO_INCREMENT,
             `name` varchar(50) CHARACTER SET utf8 NOT NULL,
-            `emaild` varchar(10) CHARACTER SET utf8 NOT NULL,
+            `email` varchar(10) CHARACTER SET utf8 NOT NULL,
             `address` varchar(2000) CHARACTER SET utf8 NOT NULL,
             PRIMARY KEY (`id`)
           ) $charset_collate;
